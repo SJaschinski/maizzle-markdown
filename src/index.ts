@@ -43,10 +43,11 @@ const upsertCodaRow = async (newsletterId: string, html: string) => {
 };
 
 const getNewsletter = async (newsletterId: string) => {
-  console.log("Getting newsletter", newsletterId);
   const docId = "zz10IjV_U_";
-  const tableId = "grid-WwqVV4kyYc";
-  const url = `${baseUrl}/docs/${docId}/tables/${tableId}/rows?valueFormat=simple&visibleOnly=true`;
+  const tableId = "grid-kUNhyVmPHv";
+  console.log("Getting newsletter", newsletterId);
+  // {{baseUrl}}/docs/:docId/tables/:tableIdOrName/rows/:rowIdOrName?useColumnNames=false&valueFormat=rich
+  const url = `${baseUrl}/docs/${docId}/tables/${tableId}/rows/${newsletterId}?useColumnNames=false&valueFormat=rich&visibleOnly=true`;
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -55,23 +56,8 @@ const getNewsletter = async (newsletterId: string) => {
         Authorization: `Bearer ${bearerToken}`,
       },
     });
-    // const data = await response.json();
-    // const teams = {};
-    // return data.items.reduce(
-    //   (
-    //     map: { [key: string]: { url: string; duration: string } },
-    //     item: any
-    //   ) => {
-    //     return {
-    //       ...map,
-    //       [item.name]: {
-    //         url: item.values["c-Cmiq2kBKim"],
-    //         duration: item.values["c-BVUYPt-dSF"],
-    //       },
-    //     };
-    //   },
-    //   teams
-    // );
+    const data = await response.json();
+    return data.values["c-WaJvqpnq48"];
   } catch (error) {
     console.log("Error in getNewsletter", error);
   }
@@ -106,9 +92,10 @@ const getNewsletter = async (newsletterId: string) => {
 const main_actual = async () => {
   try {
     const md = await getNewsletter(newsletterId);
+    console.log("md", md);
     // save string to markdown file
     // await saveMarkdown("md");
-    await upsertCodaRow(newsletterId, "html");
+    // await upsertCodaRow(newsletterId, "html");
     // await deployVercel();
   } catch (error) {
     console.log(error);
@@ -130,4 +117,4 @@ const bearerToken = process.env.CODA_BEARER_TOKEN;
 console.log("bearerToken", bearerToken);
 const vercelProjectId = process.env.VERCEL_PROJECT_ID;
 console.log("vercelProjectId", vercelProjectId);
-// main();
+main();
