@@ -54,10 +54,7 @@ const openHtml = async () => {
     `./build_production/${newsletterId}.html`,
     "utf8"
   );
-  html = html.replace(
-    /src=\"images\/(.*)\"/g,
-    'src="https://werra09-55xj5ce4v-it-freelancer.vercel.app/images/maizzle/$1"'
-  );
+  html = html.replace(/src=\"images\/(.*)\"/g, `src="${maizzleImagesUrl}/$1"`);
   return html;
 };
 
@@ -90,4 +87,6 @@ const bearerToken = process.env.CODA_BEARER_TOKEN;
 console.log("bearerToken", bearerToken);
 const vercelProjectId = process.env.VERCEL_PROJECT_ID;
 console.log("vercelProjectId", vercelProjectId);
+const maizzleImagesUrl = process.env.MAIZZLE_IMAGES_URL;
+console.log("maizzleImagesUrl", maizzleImagesUrl);
 main();
