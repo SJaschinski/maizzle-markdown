@@ -29,10 +29,12 @@ jobs:
         env:
           CODA_BASE_URL: ${{ secrets.CODA_BASE_URL }}
           CODA_BEARER_TOKEN: ${{ secrets.CODA_BEARER_TOKEN }}
+          MAIZZLE_IMAGES_URL: ${{ secrets.MAIZZLE_IMAGES_URL }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       - run: npm run build:maizzle
       - run: npm run html -- ${{ github.event.client_payload.newsletter }}
         env:
           CODA_BASE_URL: ${{ secrets.CODA_BASE_URL }}
           CODA_BEARER_TOKEN: ${{ secrets.CODA_BEARER_TOKEN }}
+          MAIZZLE_IMAGES_URL: ${{ secrets.MAIZZLE_IMAGES_URL }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
