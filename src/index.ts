@@ -2,12 +2,9 @@ import * as dotenv from "dotenv";
 // import { CodaPayload } from "./codaPayload";
 // import { CodaRow } from "./codaRow";
 import fetch from "node-fetch";
-import { promises as fs } from "fs";
+// import { promises as fs } from "fs";
 
-const upsertCodaRow = async (
-  newsletterId, // string
-  html // string
-) => {
+const upsertCodaRow = async (newsletterId: string, html: string) => {
   // CodaRow
   const codaRow = {
     cells: [
@@ -39,13 +36,14 @@ const upsertCodaRow = async (
       body: JSON.stringify(codaPayload),
     });
     const data = await response.json();
-    console.log(`Upsert for newsletter ${team}`, data);
+    console.log(`Upsert for newsletter ${newsletterId}`, data);
   } catch (error) {
     console.log("Error in upsertCodaRow", error);
   }
 };
 
-const getNewsletter = async (newsletterId) => {
+const getNewsletter = async (newsletterId: string) => {
+  console.log("Getting newsletter", newsletterId);
   const docId = "zz10IjV_U_";
   const tableId = "grid-WwqVV4kyYc";
   const url = `${baseUrl}/docs/${docId}/tables/${tableId}/rows?valueFormat=simple&visibleOnly=true`;
@@ -57,17 +55,23 @@ const getNewsletter = async (newsletterId) => {
         Authorization: `Bearer ${bearerToken}`,
       },
     });
-    const data = await response.json();
-    const teams = {};
-    return data.items.reduce((map, item) => {
-      return {
-        ...map,
-        [item.name]: {
-          url: item.values["c-Cmiq2kBKim"],
-          duration: item.values["c-BVUYPt-dSF"],
-        },
-      };
-    }, teams);
+    // const data = await response.json();
+    // const teams = {};
+    // return data.items.reduce(
+    //   (
+    //     map: { [key: string]: { url: string; duration: string } },
+    //     item: any
+    //   ) => {
+    //     return {
+    //       ...map,
+    //       [item.name]: {
+    //         url: item.values["c-Cmiq2kBKim"],
+    //         duration: item.values["c-BVUYPt-dSF"],
+    //       },
+    //     };
+    //   },
+    //   teams
+    // );
   } catch (error) {
     console.log("Error in getNewsletter", error);
   }
@@ -87,24 +91,24 @@ const getNewsletter = async (newsletterId) => {
 //   }
 // };
 
-const saveMarkdown = async (md) => {
-  const filename = "newsletter.md";
-  try {
-    await fs
-      .writeFile(filename, md)
-      .then(() => console.log(`Saved ${filename}`))
-      .catch((err) => console.log(err));
-  } catch (error) {
-    console.log("Error in saveMarkdown", error);
-  }
-};
+// const saveMarkdown = async (md: string) => {
+//   const filename = "newsletter.md";
+//   try {
+//     await fs
+//       .writeFile(filename, md)
+//       .then(() => console.log(`Saved ${filename}`))
+//       .catch((err) => console.log(err));
+//   } catch (error) {
+//     console.log("Error in saveMarkdown", error);
+//   }
+// };
 
 const main_actual = async () => {
   try {
     const md = await getNewsletter(newsletterId);
     // save string to markdown file
-    await saveMarkdown(md);
-    await upsertCodaRow(newsletterId, html);
+    // await saveMarkdown("md");
+    await upsertCodaRow(newsletterId, "html");
     // await deployVercel();
   } catch (error) {
     console.log(error);
