@@ -1,91 +1,126 @@
 <!DOCTYPE {{{ page.doctype || 'html' }}}>
-<html lang="{{ page.language || 'en' }}" xmlns:v="urn:schemas-microsoft-com:vml">
-<head>
-  <meta charset="{{ page.charset || 'utf-8' }}">
-  <meta name="x-apple-disable-message-reformatting">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
-  <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <style>
-    td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
-  </style>
-  <![endif]-->
-  <if condition="page.title">
-    <title>{{{ page.title }}}</title>
-  </if>
-  <style>
-    {{{ page.css }}}
-  </style>
-  <stack name="head"></stack>
-</head>
-<body class="m-0 p-0 w-full [word-break:break-word] [-webkit-font-smoothing:antialiased] {{ page.bodyClass || 'bg-[#0F172A]' }}">
-  <if condition="page.preheader">
-    <div class="hidden">
-      {{{ page.preheader }}}
-      <each loop="item in Array.from(Array(150))">&#847; </each>
-    </div>
-  </if>
-
-  <div
-    align="center"
-    role="article"
-    aria-roledescription="email"
-    lang="{{ page.language || 'en' }}"
-    class="sm:px-4 {{ page.bodyClass || 'bg-[#0F172A]' }}"
-    aria-label="{{{ page.title || '' }}}"
+<html
+  lang="{{ page.language || 'en' }}"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+>
+  <head>
+    <meta charset="{{ page.charset || 'utf-8' }}" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="format-detection"
+      content="telephone=no, date=no, address=no, email=no, url=no"
+    />
+    <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings
+            xmlns:o="urn:schemas-microsoft-com:office:office"
+          >
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <style>
+        td,
+        th,
+        div,
+        p,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: "Segoe UI", sans-serif;
+          mso-line-height-rule: exactly;
+        }
+      </style>
+    <![endif]-->
+    <if condition="page.title">
+      <title>{{{ page.title }}}</title>
+    </if>
+    <style>
+      {{{ page.css }}}
+    </style>
+    <stack name="head"></stack>
+  </head>
+  <body
+    class="m-0 p-0 w-full [word-break:break-word] [-webkit-font-smoothing:antialiased] {{ page.bodyClass || 'bg-[#0F172A]' }}"
   >
-    <x-spacer height="40px"></x-spacer>
+    <if condition="page.preheader">
+      <div class="hidden">
+        {{{ page.preheader }}}
+        <each loop="item in Array.from(Array(150))">&#847; </each>
+      </div>
+    </if>
 
-    <div class="text-center">
-      <img src="insignia.png" width="100" alt="Maizzle">
+    <div
+      align="center"
+      role="article"
+      aria-roledescription="email"
+      lang="{{ page.language || 'en' }}"
+      class="sm:px-4 {{ page.bodyClass || 'bg-[#0F172A]' }}"
+      aria-label="{{{ page.title || '' }}}"
+    >
+      <x-spacer height="40px"></x-spacer>
+
+      <div class="text-center">
+        <img src="hsg-werra.png" width="100" alt="HSG Werra WHO 09" />
+      </div>
+
+      <x-spacer height="40px"></x-spacer>
+
+      <table class="font-sans">
+        <tr>
+          <td class="w-150 max-w-full py-8 bg-white rounded-xl">
+            <table class="w-full">
+              <tr>
+                <td class="px-8 sm:px-4 max-w-0">
+                  <slot:template></slot:template>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr role="separator">
+          <td class="leading-10">&zwnj;</td>
+        </tr>
+        <tr>
+          <td class="px-8 sm:px-4">
+            <table class="w-full">
+              <tr>
+                <td class="align-top sm:block sm:w-full sm:pb-8">
+                  <img
+                    src="hsg-werra.png"
+                    width="60"
+                    class="sm:w-12"
+                    alt="Maizzle"
+                  />
+                </td>
+                <td class="sm:block sm:w-full px-8 sm:px-0">
+                  <p class="m-0 mb-2 text-sm text-slate-400">
+                    HSG Werra WHO 09, Schubertstraße 18, 36266 Heringen
+                    <br />
+                    Wenn du keine weiteren Newsletter von uns erhalten möchtest,
+                    <br />
+                    kannst du dich mit dem folgenden Link abmelden:
+                    <br />
+                    <a
+                      href="https://www.werra09.de/newsletter/cancel/{1}"
+                      class="text-slate-400 hover:text-slate-300"
+                      >https://www.werra09.de/newsletter/cancel/{1}</a
+                    >.
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <x-spacer height="40px"></x-spacer>
     </div>
-
-    <x-spacer height="40px"></x-spacer>
-
-    <table class="font-sans">
-      <tr>
-        <td class="w-150 max-w-full py-8 bg-white rounded-xl">
-          <table class="w-full">
-            <tr>
-              <td class="px-8 sm:px-4 max-w-0">
-                <slot:template></slot:template>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr role="separator">
-        <td class="leading-10">&zwnj;</td>
-      </tr>
-      <tr>
-        <td class="px-8 sm:px-4">
-          <table class="w-full">
-            <tr>
-              <td class="align-top sm:block sm:w-full sm:pb-8">
-                <img src="insignia.png" width="60" class="sm:w-12" alt="Maizzle">
-              </td>
-              <td class="sm:block sm:w-full px-8 sm:px-0">
-                <p class="m-0 mb-2 text-sm text-slate-400">
-                  Maizzle Markdown, 101 OSS Road.
-                  <br>
-                  If you no longer wish to receive these emails,
-                  you can <a href="https://maizzle.com" class="text-slate-400 hover:text-slate-300">unsubscribe</a>.
-                </p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-    <x-spacer height="40px"></x-spacer>
-  </div>
-</body>
+  </body>
 </html>
