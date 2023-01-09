@@ -1,46 +1,6 @@
 import * as dotenv from "dotenv";
-// import { CodaPayload } from "./codaPayload";
-// import { CodaRow } from "./codaRow";
 import fetch from "node-fetch";
 import { promises as fs } from "fs";
-
-const upsertCodaRow = async (newsletterId: string, html: string) => {
-  // CodaRow
-  const codaRow = {
-    cells: [
-      {
-        column: "c-SJi37oyjn4",
-        value: newsletterId,
-      },
-      {
-        column: "c-XPbBFYj-vm",
-        value: html,
-      },
-    ],
-  };
-  // CodaPayload
-  const codaPayload = {
-    rows: [codaRow],
-    keyColumns: ["c-SJi37oyjn4"],
-  };
-  const docId = "zz10IjV_U_";
-  const tableId = "grid-BcNdt6OiN8";
-  const url = `${baseUrl}/docs/${docId}/tables/${tableId}/rows?disableParsing=true`;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-      body: JSON.stringify(codaPayload),
-    });
-    const data = await response.json();
-    console.log(`Upsert for newsletter ${newsletterId}`, data);
-  } catch (error) {
-    console.log("Error in upsertCodaRow", error);
-  }
-};
 
 const getNewsletter = async () => {
   const docId = "zz10IjV_U_";
@@ -93,7 +53,6 @@ const main_actual = async () => {
   try {
     const md = await getNewsletter();
     await saveMarkdown(md);
-    // await upsertCodaRow(newsletterId, "html");
     // await deployVercel();
   } catch (error) {
     console.log(error);
@@ -113,8 +72,8 @@ if (!newsletterId) {
   console.log("No newsletterId provided");
   process.exit(1);
 }
-console.log("newsletterId", newsletterId);
-const baseUrl = "https://coda.io/apis/v1";
+const baseUrl = process.env.CODA_BASE_URL;
+console.log("baseUrl", baseUrl);
 const bearerToken = process.env.CODA_BEARER_TOKEN;
 console.log("bearerToken", bearerToken);
 const vercelProjectId = process.env.VERCEL_PROJECT_ID;

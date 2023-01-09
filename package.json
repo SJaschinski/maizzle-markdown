@@ -3,8 +3,9 @@
   "scripts": {
     "dev": "maizzle serve",
     "build:tsc": "tsc --build",
-    "node": "node ./dst/index.js",
-    "build:maizzle": "maizzle build production"
+    "markdown": "node ./dst/markdown.js",
+    "build:maizzle": "maizzle build production",
+    "html": "node ./dst/html.js"
   },
   "dependencies": {
     "@maizzle/framework": "next",
