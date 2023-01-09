@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 // import { CodaPayload } from "./codaPayload";
 // import { CodaRow } from "./codaRow";
 import fetch from "node-fetch";
-// import { promises as fs } from "fs";
+import { promises as fs } from "fs";
 
 const upsertCodaRow = async (newsletterId: string, html: string) => {
   // CodaRow
@@ -42,7 +42,7 @@ const upsertCodaRow = async (newsletterId: string, html: string) => {
   }
 };
 
-const getNewsletter = async (newsletterId: string) => {
+const getNewsletter = async () => {
   const docId = "zz10IjV_U_";
   const tableId = "grid-kUNhyVmPHv";
   console.log("Getting newsletter", newsletterId);
@@ -77,24 +77,22 @@ const getNewsletter = async (newsletterId: string) => {
 //   }
 // };
 
-// const saveMarkdown = async (md: string) => {
-//   const filename = "newsletter.md";
-//   try {
-//     await fs
-//       .writeFile(filename, md)
-//       .then(() => console.log(`Saved ${filename}`))
-//       .catch((err) => console.log(err));
-//   } catch (error) {
-//     console.log("Error in saveMarkdown", error);
-//   }
-// };
+const saveMarkdown = async (md: string) => {
+  const filename = `./src/content/${newsletterId}.md`;
+  try {
+    await fs
+      .writeFile(filename, md)
+      .then(() => console.log(`Saved ${filename}`))
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log("Error in saveMarkdown", error);
+  }
+};
 
 const main_actual = async () => {
   try {
-    const md = await getNewsletter(newsletterId);
-    console.log("md", md);
-    // save string to markdown file
-    // await saveMarkdown("md");
+    const md = await getNewsletter();
+    await saveMarkdown(md);
     // await upsertCodaRow(newsletterId, "html");
     // await deployVercel();
   } catch (error) {
@@ -111,6 +109,10 @@ let main = async () => {
 dotenv.config();
 console.log("argv", process.argv);
 const newsletterId = process.argv[2];
+if (!newsletterId) {
+  console.log("No newsletterId provided");
+  process.exit(1);
+}
 console.log("newsletterId", newsletterId);
 const baseUrl = "https://coda.io/apis/v1";
 const bearerToken = process.env.CODA_BEARER_TOKEN;
